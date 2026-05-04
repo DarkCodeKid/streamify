@@ -1046,17 +1046,27 @@ button {
   }
 
   .grid-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on mobile */
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    padding: 0;
   }
 
   .card {
-    padding: 12px;
+    padding: 10px;
+    border-radius: 8px;
   }
 
   .card-title {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
   }
+
+  .card-img-container {
+    margin-bottom: 8px;
+    border-radius: 6px;
+  }
+
 
   .player-bar {
     bottom: 64px; /* Lift player above mobile nav */

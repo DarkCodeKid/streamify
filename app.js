@@ -1,5 +1,5 @@
 import { searchSongs } from './js/api.js';
-import { initAuth, requireLogin, currentUser } from './js/auth.js';
+import { initAuth, requireLogin, currentUser, openAuthModal } from './js/auth.js';
 import { toggleFavorite, fetchFavorites, downloadSong, getDownloads } from './js/data.js';
 import { initPlayer, playSongList, togglePlay, playNext, playPrev, seekTo, setVolume, toggleShuffle, toggleRepeat } from './js/player.js';
 import { els, showTab, renderSongs, renderDownloads, initPlayerUI } from './js/ui.js';
@@ -51,7 +51,14 @@ function setupEventListeners() {
         handleTabSwitch('home'); // Focus home (which has search bar)
         document.getElementById('search').focus();
     });
-    mobileNavs.library?.addEventListener('click', () => handleTabSwitch('favorites'));
+    mobileNavs.library?.addEventListener('click', () => {
+        if (!currentUser) {
+            openAuthModal('login');
+        } else {
+            handleTabSwitch('favorites');
+        }
+    });
+
 
 
     // Search Input

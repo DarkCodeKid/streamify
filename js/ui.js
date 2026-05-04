@@ -2,80 +2,74 @@ import { playerState } from './state.js';
 
 // DOM Elements cache
 // DOM Elements cache (Lazy-loaded to ensure DOM is ready)
-export const els = new Proxy({}, {
-    get: (target, prop) => {
-        if (prop === 'tabs') {
-            return {
-                home: document.getElementById('homeTab'),
-                favorites: document.getElementById('favoritesTab'),
-                downloads: document.getElementById('downloadsTab')
-            };
-        }
-        if (prop === 'navs') {
-            return {
-                home: document.getElementById('nav-home'),
-                favorites: document.getElementById('nav-favorites'),
-                downloads: document.getElementById('nav-downloads')
-            };
-        }
-        if (prop === 'containers') {
-            return {
-                results: document.getElementById('results'),
-                favorites: document.getElementById('favoritesList'),
-                downloads: document.getElementById('downloadsList')
-            };
-        }
-        if (prop === 'player') {
-            return {
-                miniPlayer: document.getElementById('mini-player'),
-                playIcon: document.getElementById('playIcon'),
-                progress: document.getElementById('progress'),
-                currentTime: document.getElementById('currentTime'),
-                durationTime: document.getElementById('durationTime'),
-                title: document.getElementById('songTitle'),
-                thumb: document.getElementById('songThumb'),
-                volume: document.getElementById('volume'),
-                volumeIcon: document.getElementById('volumeIcon'),
-                btnTogglePlay: document.getElementById('btn-toggle-play'),
-                btnToggleMute: document.getElementById('btn-toggle-mute'),
-                btnPrev: document.getElementById('btn-prev'),
-                btnNext: document.getElementById('btn-next'),
-
-                expanded: document.getElementById('expanded-player'),
-                btnCloseExpanded: document.getElementById('btn-close-expanded'),
-                expandedThumb: document.getElementById('expanded-thumb'),
-                expandedTitle: document.getElementById('expanded-title'),
-                expandedArtist: document.getElementById('expanded-artist'),
-                expandedProgress: document.getElementById('expanded-progress'),
-                expandedCurrentTime: document.getElementById('expanded-currentTime'),
-                expandedDurationTime: document.getElementById('expanded-durationTime'),
-                btnShuffle: document.getElementById('btn-shuffle'),
-                btnRepeat: document.getElementById('btn-repeat'),
-                expandedBtnPrev: document.getElementById('expanded-btn-prev'),
-                expandedBtnNext: document.getElementById('expanded-btn-next'),
-                expandedBtnTogglePlay: document.getElementById('expanded-btn-toggle-play'),
-                expandedPlayIcon: document.getElementById('expanded-playIcon')
-            };
-        }
-
-        // Map short names to IDs if not found in target
-        const elementMap = {
-            authUnlogged: 'auth-unlogged',
-            authLogged: 'auth-logged',
-            userStatus: 'userStatus',
-            authModal: 'authModal',
-            authForm: 'auth-form',
-            authModalTitle: 'auth-modal-title',
-            authSwitchPrompt: 'auth-switch-prompt',
-            btnSwitchAuth: 'btn-switch-auth',
-            authError: 'auth-error',
-            toastContainer: 'toastContainer'
+export const els = {
+    get authUnlogged() { return document.getElementById('auth-unlogged'); },
+    get authLogged() { return document.getElementById('auth-logged'); },
+    get userStatus() { return document.getElementById('userStatus'); },
+    get authModal() { return document.getElementById('authModal'); },
+    get authForm() { return document.getElementById('auth-form'); },
+    get authModalTitle() { return document.getElementById('auth-modal-title'); },
+    get authSwitchPrompt() { return document.getElementById('auth-switch-prompt'); },
+    get btnSwitchAuth() { return document.getElementById('btn-switch-auth'); },
+    get authError() { return document.getElementById('auth-error'); },
+    get toastContainer() { return document.getElementById('toastContainer'); },
+    get search() { return document.getElementById('search'); },
+    
+    get tabs() {
+        return {
+            home: document.getElementById('homeTab'),
+            favorites: document.getElementById('favoritesTab'),
+            downloads: document.getElementById('downloadsTab')
         };
+    },
+    get navs() {
+        return {
+            home: document.getElementById('nav-home'),
+            favorites: document.getElementById('nav-favorites'),
+            downloads: document.getElementById('nav-downloads')
+        };
+    },
+    get containers() {
+        return {
+            results: document.getElementById('results'),
+            favorites: document.getElementById('favoritesList'),
+            downloads: document.getElementById('downloadsList')
+        };
+    },
+    get player() {
+        return {
+            miniPlayer: document.getElementById('mini-player'),
+            playIcon: document.getElementById('playIcon'),
+            progress: document.getElementById('progress'),
+            currentTime: document.getElementById('currentTime'),
+            durationTime: document.getElementById('durationTime'),
+            title: document.getElementById('songTitle'),
+            thumb: document.getElementById('songThumb'),
+            volume: document.getElementById('volume'),
+            volumeIcon: document.getElementById('volumeIcon'),
+            btnTogglePlay: document.getElementById('btn-toggle-play'),
+            btnToggleMute: document.getElementById('btn-toggle-mute'),
+            btnPrev: document.getElementById('btn-prev'),
+            btnNext: document.getElementById('btn-next'),
 
-        const id = elementMap[prop] || prop;
-        return document.getElementById(id);
+            expanded: document.getElementById('expanded-player'),
+            btnCloseExpanded: document.getElementById('btn-close-expanded'),
+            expandedThumb: document.getElementById('expanded-thumb'),
+            expandedTitle: document.getElementById('expanded-title'),
+            expandedArtist: document.getElementById('expanded-artist'),
+            expandedProgress: document.getElementById('expanded-progress'),
+            expandedCurrentTime: document.getElementById('expanded-currentTime'),
+            expandedDurationTime: document.getElementById('expanded-durationTime'),
+            btnShuffle: document.getElementById('btn-shuffle'),
+            btnRepeat: document.getElementById('btn-repeat'),
+            expandedBtnPrev: document.getElementById('expanded-btn-prev'),
+            expandedBtnNext: document.getElementById('expanded-btn-next'),
+            expandedBtnTogglePlay: document.getElementById('expanded-btn-toggle-play'),
+            expandedPlayIcon: document.getElementById('expanded-playIcon')
+        };
     }
-});
+};
+
 
 
 // ================= UI Initialization =================

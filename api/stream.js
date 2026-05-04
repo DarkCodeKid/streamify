@@ -21,19 +21,22 @@ module.exports = async (req, res) => {
   try {
     const url = `https://www.youtube.com/watch?v=${id}`;
     
-    // Get stream from play-dl
+    // Get stream from play-dl with improved settings
     const stream = await play.stream(url, {
-        quality: 0, // bestaudio
-        discordPlayerCompatibility: true // Helps with some headers
+        quality: 0, 
+        discordPlayerCompatibility: true,
+        // Using a more standard UA can help bypass some blocks
+        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
     });
 
-    res.setHeader("Content-Type", "audio/mpeg");
-    // res.setHeader("Content-Length", ...); // Optional, play-dl doesn't always provide it easily
+    res.setHeader("Content-Type", stream.type || "audio/mpeg");
+    res.setHeader("Cache-Control", "public, max-age=3600");
 
     stream.stream.pipe(res);
 
   } catch (err) {
-    console.error("Streaming error:", err);
-    res.status(500).send("Error streaming audio: " + err.message);
+    console.error("Streaming error for ID", id, ":", err);
+    res.status(500).send("Error streaming audio. It might be restricted or blocked.");
   }
+
 };
