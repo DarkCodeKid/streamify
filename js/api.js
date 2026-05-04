@@ -1,4 +1,4 @@
-export const API_BASE = "http://localhost:5000";
+export const API_BASE = window.location.origin + "/api";
 
 // Export the singleton supabase client
 const SUPABASE_URL = "https://ycplraanzktxpfbibwwb.supabase.co";

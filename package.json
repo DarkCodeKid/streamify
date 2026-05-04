@@ -1,0 +1,15 @@
+{
+  "name": "streamify",
+  "version": "1.0.0",
+  "description": "Streamify Music Player",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "dependencies": {
+    "youtube-search-api": "^2.0.1",
+    "play-dl": "^1.9.7",
+    "cors": "^2.8.5"
+  }
+}

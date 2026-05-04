@@ -39,6 +39,21 @@ function setupEventListeners() {
     els.navs.favorites.addEventListener('click', () => handleTabSwitch('favorites'));
     els.navs.downloads.addEventListener('click', () => handleTabSwitch('downloads'));
 
+    // Mobile Navigation
+    const mobileNavs = {
+        home: document.getElementById('mobile-nav-home'),
+        search: document.getElementById('mobile-nav-search'),
+        library: document.getElementById('mobile-nav-library')
+    };
+
+    mobileNavs.home?.addEventListener('click', () => handleTabSwitch('home'));
+    mobileNavs.search?.addEventListener('click', () => {
+        handleTabSwitch('home'); // Focus home (which has search bar)
+        document.getElementById('search').focus();
+    });
+    mobileNavs.library?.addEventListener('click', () => handleTabSwitch('favorites'));
+
+
     // Search Input
     const searchInput = document.getElementById('search');
     searchInput.addEventListener('input', async (e) => {
@@ -71,7 +86,13 @@ function handleTabSwitch(tabId) {
     showTab(tabId);
     if (tabId === 'favorites') loadFavorites();
     if (tabId === 'downloads') loadDownloads();
+
+    // Sync mobile nav active state
+    document.querySelectorAll('.mobile-nav-item').forEach(btn => btn.classList.remove('active'));
+    if (tabId === 'home') document.getElementById('mobile-nav-home')?.classList.add('active');
+    if (tabId === 'favorites') document.getElementById('mobile-nav-library')?.classList.add('active');
 }
+
 
 // Callbacks passed to the UI renderer
 const songActionCallbacks = {
