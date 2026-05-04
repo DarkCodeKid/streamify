@@ -18,15 +18,16 @@ export async function initAuth(onAuthChangeCallback) {
         if (onAuthChangeCallback) onAuthChangeCallback(currentUser);
     });
 
-    // Event Listeners for Modals & Forms
-    document.getElementById('btn-show-login').addEventListener('click', () => openAuthModal('login'));
-    document.getElementById('btn-show-signup').addEventListener('click', () => openAuthModal('signup'));
-    document.getElementById('btn-close-modal').addEventListener('click', closeAuthModal);
-    document.getElementById('modal-overlay').addEventListener('click', closeAuthModal);
-    document.getElementById('btn-switch-auth').addEventListener('click', toggleAuthMode);
-    document.getElementById('btn-logout').addEventListener('click', logout);
+    // Event Listeners for Modals & Forms (Safe attachment)
+    document.getElementById('btn-show-login')?.addEventListener('click', () => openAuthModal('login'));
+    document.getElementById('btn-show-signup')?.addEventListener('click', () => openAuthModal('signup'));
+    document.getElementById('btn-close-modal')?.addEventListener('click', closeAuthModal);
+    document.getElementById('modal-overlay')?.addEventListener('click', closeAuthModal);
+    document.getElementById('btn-switch-auth')?.addEventListener('click', toggleAuthMode);
+    document.getElementById('btn-logout')?.addEventListener('click', logout);
     
-    els.authForm.addEventListener('submit', handleAuthSubmit);
+    els.authForm?.addEventListener('submit', handleAuthSubmit);
+
 }
 
 function updateUIForAuth() {

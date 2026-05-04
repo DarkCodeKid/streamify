@@ -1,4 +1,4 @@
-const play = require("play-dl");
+const youtubedl = require('youtube-dl-exec');
 
 module.exports = async (req, res) => {
   // CORS Headers
@@ -10,8 +10,6 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // Support both /api/stream?id=XXX and /api/stream/XXX (if routed)
-  // Vercel usually passes params if configured, but query is safer default
   const id = req.query.id || req.url.split('/').pop().split('?')[0];
 
   if (!id || id === 'stream') {
@@ -21,22 +19,29 @@ module.exports = async (req, res) => {
   try {
     const url = `https://www.youtube.com/watch?v=${id}`;
     
-    // Get stream from play-dl with improved settings
-    const stream = await play.stream(url, {
-        quality: 0, 
-        discordPlayerCompatibility: true,
-        // Using a more standard UA can help bypass some blocks
-        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+    // Using youtube-dl-exec to stream bestaudio directly to response
+    const subprocess = youtubedl.exec(url, {
+      f: 'bestaudio',
+      o: '-', // output to stdout
+      noWarnings: true,
+      noCallHome: true,
+      noCheckCertificates: true
+    }, {
+      stdio: ['ignore', 'pipe', 'ignore'] // ignore stdin/stderr, pipe stdout
     });
 
-    res.setHeader("Content-Type", stream.type || "audio/mpeg");
+    res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Cache-Control", "public, max-age=3600");
 
-    stream.stream.pipe(res);
+    subprocess.stdout.pipe(res);
+
+    subprocess.on('error', (err) => {
+       console.error("Stream subprocess error:", err);
+    });
 
   } catch (err) {
     console.error("Streaming error for ID", id, ":", err);
     res.status(500).send("Error streaming audio. It might be restricted or blocked.");
   }
-
 };
+

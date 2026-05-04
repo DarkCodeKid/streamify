@@ -361,10 +361,16 @@ export function renderSongs(songs, containerId, callbacks) {
             </div>
         `;
 
+        // Play song when clicking the card itself (essential for mobile list view)
+        div.addEventListener('click', () => {
+            callbacks.onPlay(songs, index);
+        });
+
         div.querySelector('.play-trigger').addEventListener('click', (e) => {
             e.stopPropagation();
             callbacks.onPlay(songs, index);
         });
+
 
         div.querySelector('.fav-trigger').addEventListener('click', (e) => {
             e.stopPropagation();
@@ -402,7 +408,13 @@ export function renderDownloads(downloads, callbacks) {
             </button>
         `;
 
-        div.querySelector('.play-trigger').addEventListener('click', () => {
+        // Play song when clicking the list item
+        div.addEventListener('click', () => {
+            callbacks.onPlay(downloads, index);
+        });
+
+        div.querySelector('.play-trigger').addEventListener('click', (e) => {
+            e.stopPropagation();
             callbacks.onPlay(downloads, index);
         });
 

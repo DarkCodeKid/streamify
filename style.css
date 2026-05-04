@@ -1041,31 +1041,52 @@ button {
     max-width: 100%;
   }
 
-  .content-area {
-    padding: 16px;
-  }
-
   .grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     padding: 0;
   }
 
   .card {
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
     border-radius: 8px;
-  }
-
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 2px;
+    gap: 12px;
+    background-color: transparent;
+    border-bottom: 1px solid var(--bg-highlight);
   }
 
   .card-img-container {
-    margin-bottom: 8px;
-    border-radius: 6px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    border-radius: 4px;
   }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0;
+    flex: 1;
+    text-align: left;
+  }
+
+  .card-actions {
+    margin-top: 0;
+    gap: 16px;
+  }
+
+  .card-play-btn {
+    display: none !important; /* Hide hover play button on mobile list */
+  }
+
+  .empty-state i {
+    font-size: 48px;
+  }
+
 
 
   .player-bar {

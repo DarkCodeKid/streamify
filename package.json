@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "youtube-search-api": "^2.0.1",
-    "play-dl": "^1.9.7",
+    "youtube-dl-exec": "^3.0.15",
     "cors": "^2.8.5"
   }
 }
+
