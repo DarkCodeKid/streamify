@@ -1,63 +1,82 @@
 import { playerState } from './state.js';
 
 // DOM Elements cache
-export const els = {
-    authUnlogged: document.getElementById('auth-unlogged'),
-    authLogged: document.getElementById('auth-logged'),
-    userStatus: document.getElementById('userStatus'),
-    authModal: document.getElementById('authModal'),
-    authForm: document.getElementById('auth-form'),
-    authModalTitle: document.getElementById('auth-modal-title'),
-    authSwitchPrompt: document.getElementById('auth-switch-prompt'),
-    btnSwitchAuth: document.getElementById('btn-switch-auth'),
-    authError: document.getElementById('auth-error'),
-    toastContainer: document.getElementById('toastContainer'),
-    tabs: {
-        home: document.getElementById('homeTab'),
-        favorites: document.getElementById('favoritesTab'),
-        downloads: document.getElementById('downloadsTab')
-    },
-    navs: {
-        home: document.getElementById('nav-home'),
-        favorites: document.getElementById('nav-favorites'),
-        downloads: document.getElementById('nav-downloads')
-    },
-    containers: {
-        results: document.getElementById('results'),
-        favorites: document.getElementById('favoritesList'),
-        downloads: document.getElementById('downloadsList')
-    },
-    player: {
-        miniPlayer: document.getElementById('mini-player'),
-        playIcon: document.getElementById('playIcon'),
-        progress: document.getElementById('progress'),
-        currentTime: document.getElementById('currentTime'),
-        durationTime: document.getElementById('durationTime'),
-        title: document.getElementById('songTitle'),
-        thumb: document.getElementById('songThumb'),
-        volume: document.getElementById('volume'),
-        volumeIcon: document.getElementById('volumeIcon'),
-        btnTogglePlay: document.getElementById('btn-toggle-play'),
-        btnToggleMute: document.getElementById('btn-toggle-mute'),
-        btnPrev: document.getElementById('btn-prev'),
-        btnNext: document.getElementById('btn-next'),
+// DOM Elements cache (Lazy-loaded to ensure DOM is ready)
+export const els = new Proxy({}, {
+    get: (target, prop) => {
+        if (prop === 'tabs') {
+            return {
+                home: document.getElementById('homeTab'),
+                favorites: document.getElementById('favoritesTab'),
+                downloads: document.getElementById('downloadsTab')
+            };
+        }
+        if (prop === 'navs') {
+            return {
+                home: document.getElementById('nav-home'),
+                favorites: document.getElementById('nav-favorites'),
+                downloads: document.getElementById('nav-downloads')
+            };
+        }
+        if (prop === 'containers') {
+            return {
+                results: document.getElementById('results'),
+                favorites: document.getElementById('favoritesList'),
+                downloads: document.getElementById('downloadsList')
+            };
+        }
+        if (prop === 'player') {
+            return {
+                miniPlayer: document.getElementById('mini-player'),
+                playIcon: document.getElementById('playIcon'),
+                progress: document.getElementById('progress'),
+                currentTime: document.getElementById('currentTime'),
+                durationTime: document.getElementById('durationTime'),
+                title: document.getElementById('songTitle'),
+                thumb: document.getElementById('songThumb'),
+                volume: document.getElementById('volume'),
+                volumeIcon: document.getElementById('volumeIcon'),
+                btnTogglePlay: document.getElementById('btn-toggle-play'),
+                btnToggleMute: document.getElementById('btn-toggle-mute'),
+                btnPrev: document.getElementById('btn-prev'),
+                btnNext: document.getElementById('btn-next'),
 
-        expanded: document.getElementById('expanded-player'),
-        btnCloseExpanded: document.getElementById('btn-close-expanded'),
-        expandedThumb: document.getElementById('expanded-thumb'),
-        expandedTitle: document.getElementById('expanded-title'),
-        expandedArtist: document.getElementById('expanded-artist'),
-        expandedProgress: document.getElementById('expanded-progress'),
-        expandedCurrentTime: document.getElementById('expanded-currentTime'),
-        expandedDurationTime: document.getElementById('expanded-durationTime'),
-        btnShuffle: document.getElementById('btn-shuffle'),
-        btnRepeat: document.getElementById('btn-repeat'),
-        expandedBtnPrev: document.getElementById('expanded-btn-prev'),
-        expandedBtnNext: document.getElementById('expanded-btn-next'),
-        expandedBtnTogglePlay: document.getElementById('expanded-btn-toggle-play'),
-        expandedPlayIcon: document.getElementById('expanded-playIcon')
+                expanded: document.getElementById('expanded-player'),
+                btnCloseExpanded: document.getElementById('btn-close-expanded'),
+                expandedThumb: document.getElementById('expanded-thumb'),
+                expandedTitle: document.getElementById('expanded-title'),
+                expandedArtist: document.getElementById('expanded-artist'),
+                expandedProgress: document.getElementById('expanded-progress'),
+                expandedCurrentTime: document.getElementById('expanded-currentTime'),
+                expandedDurationTime: document.getElementById('expanded-durationTime'),
+                btnShuffle: document.getElementById('btn-shuffle'),
+                btnRepeat: document.getElementById('btn-repeat'),
+                expandedBtnPrev: document.getElementById('expanded-btn-prev'),
+                expandedBtnNext: document.getElementById('expanded-btn-next'),
+                expandedBtnTogglePlay: document.getElementById('expanded-btn-toggle-play'),
+                expandedPlayIcon: document.getElementById('expanded-playIcon')
+            };
+        }
+
+        // Map short names to IDs if not found in target
+        const elementMap = {
+            authUnlogged: 'auth-unlogged',
+            authLogged: 'auth-logged',
+            userStatus: 'userStatus',
+            authModal: 'authModal',
+            authForm: 'auth-form',
+            authModalTitle: 'auth-modal-title',
+            authSwitchPrompt: 'auth-switch-prompt',
+            btnSwitchAuth: 'btn-switch-auth',
+            authError: 'auth-error',
+            toastContainer: 'toastContainer'
+        };
+
+        const id = elementMap[prop] || prop;
+        return document.getElementById(id);
     }
-};
+});
+
 
 // ================= UI Initialization =================
 export function initPlayerUI(playerActions) {

@@ -55,8 +55,8 @@ function setupEventListeners() {
 
 
     // Search Input
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('input', async (e) => {
+    els.search.addEventListener('input', async (e) => {
+
         const query = e.target.value.trim();
         if (query.length < 2) {
             els.containers.results.innerHTML = '<div class="empty-state"><i class="ph ph-music-notes"></i><p>Search for a song or artist</p></div>';
